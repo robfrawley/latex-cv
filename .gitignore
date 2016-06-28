@@ -14,3 +14,7 @@
 *~
 *.DS_Store
 .idea
+FontAwesome.otf
+FontAwesome.sty
+external/font-font-awesome/fontawesome.sty
+srcv.cls
