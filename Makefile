@@ -43,6 +43,9 @@ FILES_BLD_LOG_FLIST != find . -type f -prune -name "*.log" -print
 # file list of .out files
 FILES_BLD_OUT_FLIST != find . -type f -prune -name "*.out" -print
 
+# file list of .aux files
+FILES_BLD_AUX_FLIST != find . -type f -prune -name "*.aux" -print
+
 # file list of .pdf files
 FILES_BLD_PDF_FLIST != find . -type f -prune -name "*.pdf" -print
 
@@ -124,22 +127,23 @@ clean-pre: clean-pre-rm-temporary-files clean-pre-rm-temporary-links clean-pre-r
 # target: clean-pre-rm-temporary-files
 #
 clean-pre-rm-temporary-files:
-	for f in $(FILES_BLD_LOG_FLIST); do if [[ -f "$$f" ]]; then rm "$$f"; fi done
-	for f in $(FILES_BLD_OUT_FLIST); do if [[ -f "$$f" ]]; then rm "$$f"; fi done
+	for f in $(FILES_BLD_LOG_FLIST); do if [ -f "$$f" ]; then rm "$$f"; fi done
+	for f in $(FILES_BLD_AUX_FLIST); do if [ -f "$$f" ]; then rm "$$f"; fi done
+	for f in $(FILES_BLD_OUT_FLIST); do if [ -f "$$f" ]; then rm "$$f"; fi done
 
 
 #
 # target: clean-pre-rm-temporary-links
 #
 clean-pre-rm-temporary-links:
-	for f in $(FILES_BLD_LNS_FLIST); do if [[ -f "$$f" ]]; then rm "$$f"; fi done
+	for f in $(FILES_BLD_LNS_FLIST); do if [ -f "$$f" ]; then rm "$$f"; fi done
 
 
 #
 # target: clean-final-build-files
 #
 clean-pre-rm-final-files:
-	for f in $(FILES_BLD_PDF_FLIST); do if [[ -f "$$f" ]]; then rm "$$f"; fi done
+	for f in $(FILES_BLD_PDF_FLIST); do if [ -f "$$f" ]; then rm "$$f"; fi done
 
 
 #
@@ -153,7 +157,7 @@ clean-post: clean-post-mv-logs
 #
 clean-post-mv-logs:
 	mkdir -p var
-	for f in $(FILES_BLD_LOG_FLIST); do if [[ -f "$$f" ]]; then mv "$$f" "var/"; fi done
+	for f in $(FILES_BLD_LOG_FLIST); do if [ -f "$$f" ]; then mv "$$f" "var/"; fi done
 
 
 #
@@ -173,15 +177,15 @@ install-remote-files:
 # target: install-system-env
 #
 install-system-packages:
-	if [[ $(EXT_FA_MAKESTY_APT_OKAY) -ne 1 ]]; then sudo apt-get install -qq "$(EXT_FA_MAKESTY_APT)"; fi
-	if [[ $(EXT_FA_MAKESTY_APT_OKAY) -eq 1 ]]; then echo "Required packages already installed: $(EXT_FA_MAKESTY_APT)"; fi
+	if [ $(EXT_FA_MAKESTY_APT_OKAY) -ne 1 ]; then sudo apt-get install -qq "$(EXT_FA_MAKESTY_APT)"; fi
+	if [ $(EXT_FA_MAKESTY_APT_OKAY) -eq 1 ]; then echo "Required packages already installed: $(EXT_FA_MAKESTY_APT)"; fi
 
 
 #
 # target: install-fontawesome-sty
 #
 install-fontawesome-sty:
-	if [[ -f $(EXT_FA_CLASS_STY) ]]; then rm $(EXT_FA_CLASS_STY); fi
+	if [ -f $(EXT_FA_CLASS_STY) ]; then rm $(EXT_FA_CLASS_STY); fi
 	$(EXT_FA_MAKESTY_BIN) $(EXT_FA_MAKESTY_OPT)
 	mv fontawesome.sty "$(EXT_FA_CLASS_STY)"
 
