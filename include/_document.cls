@@ -47,7 +47,7 @@
 \RequirePackage[quiet]{fontspec}        % Needed to manage fonts
 \defaultfontfeatures{Ligatures=TeX}     % To support LaTeX quoting style
 \RequirePackage[math-style=TeX,vargreek-shape=unicode]{unicode-math}    % Needed to manage math fonts
-\RequirePackage{FontAwesome}            % Needed to use icons from font-awesome (https://myInfoGithub.com/posquit0/latex-fontawesome)
+\RequirePackage{FontAwesome}            % Needed to use icons from font-awesome (https://github.com/robfrawley/fa-make-tex-style)
 \RequirePackage{parskip}                % Needed to deal a paragraphs
 \RequirePackage[hidelinks]{hyperref}    % Needed to deal hyperlink
 
@@ -412,31 +412,31 @@
         {}%
         {%
           \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://google.com/\@myInfoGPlus}{\faGoogle\acvHeaderIconSep\@myInfoGPlus}%
+          \href{https://google.com/+\@myInfoGPlus}{\faGoogle\acvHeaderIconSep\@myInfoGPlus}%
         }%
       \ifthenelse{\isundefined{\@myInfoLinkedIn}}%
         {}%
         {%
           \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://www.myInfoLinkedIn.com/in/\@myInfoLinkedIn}{\faLinkedinSquare\acvHeaderIconSep\@myInfoLinkedIn}%
+          \href{https://www.linkedIn.com/in/\@myInfoLinkedIn}{\faLinkedinSquare\acvHeaderIconSep\@myInfoLinkedIn}%
         }%
       \ifthenelse{\isundefined{\@myInfoTwitter}}%
         {}%
         {%
           \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://myInfoTwitter.com/\@myInfoTwitter}{\faTwitter\acvHeaderIconSep\@myInfoTwitter}%
+          \href{https://twitter.com/\@myInfoTwitter}{\faTwitter\acvHeaderIconSep\@myInfoTwitter}%
         }%
       \ifthenelse{\isundefined{\@myInfoGithub}}%
         {}%
         {%
           \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://myInfoGithub.com/\@myInfoGithub}{\faGithubSquare\acvHeaderIconSep\@myInfoGithub}%
+          \href{https://github.com/\@myInfoGithub}{\faGithubSquare\acvHeaderIconSep\@myInfoGithub}%
         }%
       \ifthenelse{\isundefined{\@myInfoGitlab}}%
         {}%
         {%
           \ifbool{isstart}{\setbool{isstart}{false}}{\acvHeaderSocialSep}%
-          \href{https://myInfoGitlab.com/u/\@myInfoGitlab}{\faGithubSquare\acvHeaderIconSep\@myInfoGitlab}%
+          \href{https://gitlab.com/u/\@myInfoGitlab}{\faGithubSquare\acvHeaderIconSep\@myInfoGitlab}%
         }%
     } \\[\acvHeaderAfterSocialSkip]%
     \ifthenelse{\isundefined{\@quoteText}}%
