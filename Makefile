@@ -149,7 +149,7 @@ clean-pre-rm-final-files:
 #
 # target: clean-post
 #
-clean-post: clean-post-mv-logs
+clean-post: clean-post-mv-logs clean-post-rm-temporary-files
 
 
 #
@@ -157,7 +157,15 @@ clean-post: clean-post-mv-logs
 #
 clean-post-mv-logs:
 	mkdir -p var
-	for f in $(FILES_BLD_LOG_FLIST); do if [ -f "$$f" ]; then mv "$$f" "var/"; fi done
+	for f in $(FILES_BLD_LOG_FLIST); do if [ -f "$$f" ]; then mv "$$f" "./var/"; fi done
+
+
+#
+# target: clean-post-rm-temporary-files
+#
+clean-post-rm-temporary-files:
+	for f in $(FILES_BLD_AUX_FLIST); do if [ -f "$$f" ]; then rm "$$f"; fi done
+	for f in $(FILES_BLD_OUT_FLIST); do if [ -f "$$f" ]; then rm "$$f"; fi done
 
 
 #

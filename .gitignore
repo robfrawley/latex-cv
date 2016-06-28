@@ -7,13 +7,11 @@
 *.toc
 *.png
 *.dvi
-*.py
-*-converted-to.*
-<<<<<<< HEAD
 .*sw[op]
 *~
 *.DS_Store
 .idea
+/var/
 FontAwesome.otf
 FontAwesome.sty
 external/font-font-awesome/fontawesome.sty
