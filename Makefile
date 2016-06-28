@@ -1,6 +1,6 @@
 
 #
-# This file is part of the `src-run-cv` project
+# This file is part of the `robfrawley/latex-resume` project
 #
 # (c) Rob M Frawley 2nd <rmf@src.run>
 #
