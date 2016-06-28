@@ -1,0 +1,3 @@
+[submodule "external/fa-make-tex-style"]
+	path = external/fa-make-tex-style
+	url = git@github.com:robfrawley/fa-make-tex-style.git

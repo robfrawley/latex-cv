@@ -11,40 +11,40 @@
 SELF_FILE := $(lastword $(MAKEFILE_LIST))
 
 # bin/file paths, remotes, and deps
-INT_SR_DOCCLASS = "include/srcv-inc-docclass.cls"
-EXT_FA_CLASS_STY = "external/font-font-awesome/fontawesome.sty"
+INT_SR_DOCCLASS = ./include/_document.cls
+EXT_FA_CLASS_STY = ./external/font-font-awesome/fontawesome.sty
 EXT_FA_FONT_RAW = "https://github.com/FortAwesome/Font-Awesome/blob/master/fonts/FontAwesome.otf?raw=true"
-EXT_FA_FONT_OTF = "external/font-font-awesome/FontAwesome.otf"
-EXT_FA_MAKESTY_RAW = "https://github.com/posquit0/latex-fontawesome/blob/master/makesty.py?raw=true"
-EXT_FA_MAKESTY_BIN = "external/font-font-awesome/makesty.py"
-EXT_FA_MAKESTY_APT = "python3 python-pip python3-pip python-dev python-bs4"
+EXT_FA_FONT_OTF = ./external/font-font-awesome/FontAwesome.otf
+EXT_FA_MAKESTY_BIN = ./external/fa-make-tex-style/fa-make-tex-style
+EXT_FA_MAKESTY_OPT = build -p latex-cv
+EXT_FA_MAKESTY_APT = ruby
 
 # are required packages installed?
-EXT_FA_MAKESTY_APT_OKAY != dpkg -l | grep -P "^ii  (python3|python-pip|python3-pip|python-dev|python-bs4)\s" | wc -l
+EXT_FA_MAKESTY_APT_OKAY != dpkg -l | grep -P "^ii  (ruby)\s" | wc -l
 
 # binary path to latex->pdf executable
 BIN_LATEX2PDF != which xelatex
 
 # file list of .tex files
-FILES_BLD_INPUT_FLIST != find . -type f -prune -print | grep -P template/srcv-tpl\.\*\.tex$
+FILES_BLD_INPUT_FLIST != find . -type f -prune -print | grep -P template/\.\*\.tex$
 
 # file list of coverletter .tex files
-FILES_BLD_INPUT_FLIST_COVERLETTER != find . -type f -prune -print | grep -P template/srcv-tpl\.\*\.tex$ | grep tpl-coverletter
+FILES_BLD_INPUT_FLIST_COVERLETTER != find . -type f -prune -print | grep -P template/coverletter
 
 # file list of resume .tex files
-FILES_BLD_INPUT_FLIST_RESUME != find . -type f -prune -print | grep -P template/srcv-tpl\.\*\.tex$ | grep tpl-resume
+FILES_BLD_INPUT_FLIST_RESUME != find . -type f -prune -print | grep -P template/resume
 
 # file list of complete .tex files
-FILES_BLD_INPUT_FLIST_COMPLETE != find . -type f -prune -print | grep -P template/srcv-tpl\.\*\.tex$ | grep tpl-complete
+FILES_BLD_INPUT_FLIST_COMPLETE != find . -type f -prune -print | grep -P template/complete
 
 # file list of .log files
-FILES_BLD_LOG_FLIST != find . -type f -prune -print | grep -P .*\.log$
+FILES_BLD_LOG_FLIST != find . -type f -prune -name "*.log" -print
 
 # file list of .out files
-FILES_BLD_OUT_FLIST != find . -type f -prune -print | grep -P .*\.out$
+FILES_BLD_OUT_FLIST != find . -type f -prune -name "*.out" -print
 
 # file list of .pdf files
-FILES_BLD_PDF_FLIST != find . -type f -prune -print | grep -P .*\.pdf$
+FILES_BLD_PDF_FLIST != find . -type f -prune -name "*.pdf" -print
 
 # file list of symbolic link files
 FILES_BLD_LNS_FLIST != find . -type l -prune -print
@@ -124,22 +124,22 @@ clean-pre: clean-pre-rm-temporary-files clean-pre-rm-temporary-links clean-pre-r
 # target: clean-pre-rm-temporary-files
 #
 clean-pre-rm-temporary-files:
-	for f in $(FILES_BLD_LOG_FLIST); do rm "$$f"; done
-	for f in $(FILES_BLD_OUT_FLIST); do rm "$$f"; done
+	for f in $(FILES_BLD_LOG_FLIST); do if [[ -f "$$f" ]]; then rm "$$f"; fi done
+	for f in $(FILES_BLD_OUT_FLIST); do if [[ -f "$$f" ]]; then rm "$$f"; fi done
 
 
 #
 # target: clean-pre-rm-temporary-links
 #
 clean-pre-rm-temporary-links:
-	for f in $(FILES_BLD_LNS_FLIST); do rm "$$f"; done
+	for f in $(FILES_BLD_LNS_FLIST); do if [[ -f "$$f" ]]; then rm "$$f"; fi done
 
 
 #
 # target: clean-final-build-files
 #
 clean-pre-rm-final-files:
-	for f in $(FILES_BLD_PDF_FLIST); do rm "$$f"; done
+	for f in $(FILES_BLD_PDF_FLIST); do if [[ -f "$$f" ]]; then rm "$$f"; fi done
 
 
 #
@@ -159,7 +159,7 @@ clean-post-mv-logs:
 #
 # target: install
 #
-install: install-remote-files install-apt-packages install-python-style-generator install-root-symbolic-links
+install: install-remote-files install-system-packages install-fontawesome-sty install-symbolic-links
 
 
 #
@@ -167,30 +167,29 @@ install: install-remote-files install-apt-packages install-python-style-generato
 #
 install-remote-files:
 	curl -sS -L --raw --output $(EXT_FA_FONT_OTF) $(EXT_FA_FONT_RAW)
-	#curl -sS -L --raw --output $(EXT_FA_MAKESTY_BIN) $(EXT_FA_MAKESTY_RAW)
 
 
 #
 # target: install-system-env
 #
-install-apt-packages:
-	if [[ $(EXT_FA_MAKESTY_APT_OKAY) -ne 5 ]]; then sudo apt-get install -qq "$(EXT_FA_MAKESTY_APT)"; fi
-	if [[ $(EXT_FA_MAKESTY_APT_OKAY) -eq 5 ]]; then echo "Required packages already installed: $(EXT_FA_MAKESTY_APT)"; fi
+install-system-packages:
+	if [[ $(EXT_FA_MAKESTY_APT_OKAY) -ne 1 ]]; then sudo apt-get install -qq "$(EXT_FA_MAKESTY_APT)"; fi
+	if [[ $(EXT_FA_MAKESTY_APT_OKAY) -eq 1 ]]; then echo "Required packages already installed: $(EXT_FA_MAKESTY_APT)"; fi
 
 
 #
-# target: install-python-style-generator
+# target: install-fontawesome-sty
 #
-install-python-style-generator:
-	python $(EXT_FA_MAKESTY_BIN)
-	cp fontawesome.sty include/srcv-inc-fontawesome.sty
-	mv fontawesome.sty external/font-font-awesome/srcv-inc-fontawesome.sty
+install-fontawesome-sty:
+	if [[ -f $(EXT_FA_CLASS_STY) ]]; then rm $(EXT_FA_CLASS_STY); fi
+	$(EXT_FA_MAKESTY_BIN) $(EXT_FA_MAKESTY_OPT)
+	mv fontawesome.sty "$(EXT_FA_CLASS_STY)"
 
 
 #
 # target: install-root-symbolic-links
 #
-install-root-symbolic-links: clean-pre-rm-temporary-links
+install-symbolic-links: clean-pre-rm-temporary-links
 	if [ ! \( -f "FontAwesome.sty" \) ]; then ln -s $(EXT_FA_CLASS_STY) FontAwesome.sty; fi
 	if [ ! \( -f "FontAwesome.otf" \) ]; then ln -s $(EXT_FA_FONT_OTF) FontAwesome.otf; fi
 	if [ ! \( -f "srcv.cls" \) ]; then ln -s $(INT_SR_DOCCLASS) srcv.cls; fi

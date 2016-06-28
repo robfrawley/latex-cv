@@ -11,7 +11,7 @@
 %-
 %- INCLUDE CONFIG
 %-
-\input{include/srcv-inc-configuration.tex}
+\input{include/_configuration.tex}
 
 %-
 %- DOC: START
@@ -26,7 +26,7 @@
 %
 % Write page context to footer
 %
-\sectionFootC{Curriculum Vitae}
+\sectionFootC{Cover Letter}
 
 %
 % Footer macro
@@ -34,9 +34,39 @@
 \sectionFoot
 
 %
-% Use shared resume template
+% Use shared coverletter template
 %
-\input{section/srcv-sec-resume.tex}
+\input{section/coverletter.tex}
+
+%-
+%- Force new page
+%-
+\newpage
+
+%
+% Write page context to footer
+%
+\sectionFootC{Curriculum Vitae}
+
+%
+% First-page header macro
+%
+\sectionHead
+
+%
+% Write page context to footer
+%
+\sectionFootC{Cover Letter}
+
+%
+% Footer macro
+%
+\sectionFoot
+
+%
+% Use shared cresume template
+%
+\input{section/resume.tex}
 
 %-
 %- DOC: END
